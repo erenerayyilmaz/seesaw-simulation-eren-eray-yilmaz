@@ -179,3 +179,73 @@ gain.connect(audioCtx.destination);
 osc.start();
 osc.stop(audioCtx.currentTime + 0.22);
 }
+
+function updatePhysics() {
+let leftTorque = 0;
+let rightTorque = 0;
+let leftW = 0;
+let rightW = 0;
+const half = PLANK_WIDTH / 2;
+for (const o of objects) {
+const pos = (o.pct * PLANK_WIDTH) - half;
+const dist = pos < 0 ? -pos : pos;
+const t = o.weight * dist;
+if (pos < 0) {
+leftTorque += t;
+leftW += o.weight;
+} else if (pos > 0) {
+rightTorque += t;
+rightW += o.weight;
+} else {
+// tam pivotta - torque sifir, agirligi bolelim
+leftW += o.weight / 2;
+rightW += o.weight / 2;
+}
+}
+// torque farkindan aci, clamp
+let a = (rightTorque - leftTorque) / TORQUE_DIV;
+if (a > MAX_ANGLE) a = MAX_ANGLE;
+if (a < -MAX_ANGLE) a = -MAX_ANGLE;
+currentAngle = a;
+plankWrap.style.transform = `translateX(-50%) rotate(${a}deg)`;
+updateUI(leftW, rightW, leftTorque, rightTorque, a);
+}
+function updateUI(lw, rw, lt, rt, a) {
+leftWeightEl.textContent = lw + ' kg';
+rightWeightEl.textContent = rw + ' kg';
+angleEl.textContent = a.toFixed(1) + '°';
+leftTorqueEl.textContent = Math.round(lt);
+rightTorqueEl.textContent = Math.round(rt);
+// 50kg bar icin "full" sayalim, fazlasi zaten gorsel olarak taniniyor
+const MAX_BAR = 50;
+leftBar.style.width = Math.min(100, lw / MAX_BAR * 100) + '%';
+rightBar.style.width = Math.min(100, rw / MAX_BAR * 100) + '%';
+// iki tarafta da agirlik varsa ve neredeyse duzse denge parla
+const balanced = lw > 0 && rw > 0 && Math.abs(a) < 0.5;
+plankWrap.classList.toggle('is-balanced', balanced);
+}
+function resetAll() {
+objects = [];
+currentAngle = 0;
+try {
+localStorage.removeItem(STORAGE_KEY);
+} catch (e) {
+console.warn('clear failed', e);
+}
+const olds = plank.querySelectorAll('.obj');
+olds.forEach(el => el.remove());
+logList.innerHTML = '';
+hint.classList.remove('is-hidden');
+plankWrap.classList.remove('is-balanced');
+plankWrap.style.transform = 'translateX(-50%) rotate(0deg)';
+pickNextWeight();
+updatePhysics();
+}
+function saveState() {
+try {
+localStorage.setItem(STORAGE_KEY, JSON.stringify(objects));
+} catch (e) {
+console.warn('save failed', e);
+}
+}
+init();
