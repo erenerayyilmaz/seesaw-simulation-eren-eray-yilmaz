@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seesaw</title>
+  <link rel="stylesheet" href="seesaw-style.css" />
+</head>
+<body>
+  <main class="app">
+
+    <header class="header">
+      <div class="logo">
+        <span class="logo__leaf">❧</span>
+        <span class="logo__text">seesaw</span>
+      </div>
+
+      <div class="header__right">
+        <div class="next" aria-live="polite">
+          <span class="next__label">next weight</span>
+          <span class="next__value" id="nextWeight">1 kg</span>
+        </div>
+        <button
+          id="pauseBtn"
+          class="btn"
+          aria-label="Pause or resume dropping"
+          aria-pressed="false"
+        >
+          stop
+        </button>
+        <button id="resetBtn" class="btn" aria-label="Reset the simulation">
+          reset
+        </button>
+      </div>
+    </header>
+
+    <section class="stats" aria-label="Simulation statistics">
+      <div class="stat stat--left">
+        <span class="stat__label">left weight</span>
+        <span class="stat__value" id="leftWeight">0 kg</span>
+        <div class="stat__bar">
+          <div class="stat__bar-fill stat__bar-fill--left" id="leftBar"></div>
+        </div>
+      </div>
+
+      <div class="stat stat--angle">
+        <span class="stat__label">tilt angle</span>
+        <span class="stat__value stat__value--accent" id="angleValue">0.0°</span>
+      </div>
+
+      <div class="stat stat--right">
+        <span class="stat__label">right weight</span>
+        <span class="stat__value" id="rightWeight">0 kg</span>
+        <div class="stat__bar">
+          <div class="stat__bar-fill stat__bar-fill--right" id="rightBar"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="torque-row" aria-label="Torque values">
+      <div class="torque-item">
+        <span class="torque-item__label">left torque</span>
+        <span class="torque-item__value" id="leftTorqueValue">0</span>
+        <span class="torque-item__unit">kg·px</span>
+      </div>
+      <div class="torque-item">
+        <span class="torque-item__label">right torque</span>
+        <span class="torque-item__value" id="rightTorqueValue">0</span>
+        <span class="torque-item__unit">kg·px</span>
+      </div>
+    </section>
+
+    <section class="scene" aria-label="Seesaw">
+      <div class="markers" id="markers" aria-hidden="true"></div>
+
+      <div class="plank-wrap" id="plankWrap">
+        <div
+          class="plank"
+          id="plank"
+          role="button"
+          tabindex="0"
+          aria-label="Click the plank to drop an object"
+        ></div>
+      </div>
+
+      <div class="fulcrum" aria-hidden="true">
+        <div class="fulcrum__triangle"></div>
+        <div class="fulcrum__base"></div>
+      </div>
+
+      <div class="ground" aria-hidden="true">
+        <div class="ground__grass"></div>
+      </div>
+
+      <p class="hint" id="hint">click the plank to drop an object</p>
+    </section>
+
+    <section class="log" aria-label="Dropped objects">
+      <h2 class="log__title">dropped</h2>
+      <div class="log__list" id="logList"></div>
+    </section>
+
+  </main>
+
+  <script src="seesaw-script.js"></script>
+</body>
+</html>
