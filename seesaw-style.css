@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* palette */
+  --green-bright: #4caf50;
+  --green-dim:    #2e7d32;
+  --green-muted:  #1b5e20;
+  --gray-light:   #b0bec5;
+  --gray-mid:     #546e7a;
+  --gray-dark:    #263238;
+  --black-soft:   #121212;
+  --black-deep:   #0a0a0a;
+
+  --plank-width: 400px;
+  --plank-height: 16px;
+  --app-max: 720px;
+
+  --font-display: 'Fraunces', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--gray-light);
+  /* soft gray-blue atmosphere, no grid */
+  background:
+    radial-gradient(ellipse at 50% 0%, #1f2a33 0%, transparent 60%),
+    linear-gradient(180deg, #10181f 0%, #0a0d12 45%, var(--black-deep) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.app {
+  max-width: var(--app-max);
+  margin: 0 auto;
+  padding: 32px 22px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gray-light);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.logo__leaf {
+  display: inline-block;
+  color: var(--green-bright);
+  font-size: 22px;
+  line-height: 1;
+  /* slow breathing-like sway */
+  animation: leaf-sway 5s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+
+@keyframes leaf-sway {
+  0%, 100% { transform: rotate(-6deg); }
+  50%      { transform: rotate(6deg); }
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.next {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(76, 175, 80, 0.08);
+}
+
+.next__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray-mid);
+  letter-spacing: 0.5px;
+}
+
+.next__value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--green-bright);
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--gray-light);
+  border: 1px solid var(--gray-dark);
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+
+.btn:hover {
+  border-color: var(--green-dim);
+  color: var(--green-bright);
+  background: rgba(76, 175, 80, 0.06);
+}
+
+.btn--active {
+  border-color: var(--green-bright);
+  color: var(--green-bright);
+  background: rgba(76, 175, 80, 0.12);
+}
+.btn--active:hover { background: rgba(76, 175, 80, 0.16); }
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  padding: 4px 2px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 18px;
+}
+
+.stat--angle { align-items: center; text-align: center; }
+
+.stat__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray-mid);
+  letter-spacing: 0.5px;
+}
+
+.stat__value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--gray-light);
+}
+
+.stat__value--accent {
+  color: var(--green-bright);
+  font-size: 32px;
+  font-style: italic;
+}
+
+.stat__bar {
+  height: 3px;
+  width: 100%;
+  background: rgba(176, 190, 197, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.stat__bar-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.stat__bar-fill--left  { background: var(--green-bright); }
+.stat__bar-fill--right { background: var(--gray-light); }
+
+.torque-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0 2px;
+}
+
+.torque-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 18px;
+  border-top: 1px solid rgba(176, 190, 197, 0.07);
+}
+
+.torque-item__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray-mid);
+  letter-spacing: 0.5px;
+}
+
+.torque-item__value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--gray-light);
+  margin-left: auto;
+}
+
+.torque-item__unit {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gray-mid);
+}
